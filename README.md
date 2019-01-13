@@ -2,13 +2,13 @@
 springboot搭建基础开发框架
 base-boot使用springboot搭建的基础开发框架
 
-1、定义dao/service/controller实现增删改查，引入mybatis
-2、使用swaggerui组件，使用页面生成的文档
-3、拦截器定义及使用
-4、Listener、Filter定义及使用
-5、自定义注解和AOP切面编程使用
-6、mybatis拦截器定义及使用，使用mybatis拦截器实现密码数据加密存储
-7、自定义springboot的场景启动器
+### 1、定义dao/service/controller实现增删改查，引入mybatis
+### 2、使用swaggerui组件，使用页面生成的文档
+### 3、拦截器定义及使用
+### 4、Listener、Filter定义及使用
+### 5、自定义注解和AOP切面编程使用
+### 6、mybatis拦截器定义及使用，使用mybatis拦截器实现密码数据加密存储
+### 7、自定义springboot的场景启动器
 
 自定义starter需要确定的问题
 1-starter场景需要导入的依赖是什么？ 2-starter需要的自动配置是什么？
