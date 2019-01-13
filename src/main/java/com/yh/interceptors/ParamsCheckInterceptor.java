@@ -21,8 +21,12 @@ public class ParamsCheckInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         String remoteAddr = httpServletRequest.getRemoteAddr();
+        String requestURI = httpServletRequest.getRequestURI();
         if (StringUtils.isNotBlank(remoteAddr)) {
             logger.info("ParamsCheckInterceptor preHandle remoteAddr:{}", remoteAddr);
+            return true;
+        }
+        if (requestURI.contains("user")) {
             return true;
         }
         return false;
