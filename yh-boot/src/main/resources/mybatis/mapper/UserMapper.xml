@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yh.dao.UserDao">
+
+    <resultMap id="BaseResultMap" type="User">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="user_type" property="userType" jdbcType="INTEGER"/>
+        <result column="user_status" property="userStatus" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
+        <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
+        <result column="is_delete" property="isDelete" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="allColumnsWithOutId">
+        (username,password,phone,email,user_type,user_status,create_time,update_time,create_user,update_user,is_delete)
+    </sql>
+
+    <sql id="allColumns">
+        id,username,password,phone,email,user_type,user_status,create_time,update_time,create_user,update_user,is_delete
+    </sql>
+
+    <select id="getUserById" resultType="User">
+        SELECT * FROM user WHERE id=#{id,jdbcType=BIGINT}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user
+        <include refid="allColumnsWithOutId"/>
+        values (
+        #{username,jdbcType=VARCHAR},
+        #{password,jdbcType=VARCHAR},
+        #{phone,jdbcType=VARCHAR},
+        #{email,jdbcType=VARCHAR},
+        #{userType,jdbcType=TINYINT},
+        #{userStatus,jdbcType=TINYINT},
+        now(),
+        now(),
+        #{createUser,jdbcType=VARCHAR},
+        #{createUser,jdbcType=VARCHAR},
+        0
+        )
+    </insert>
+
+    <insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into USER
+        <include refid="allColumnsWithOutId"/>
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            <trim prefix="(" suffix=")">
+                #{item.username,jdbcType=VARCHAR},
+                #{item.password,jdbcType=VARCHAR},
+                #{item.phone,jdbcType=VARCHAR},
+                #{item.email,jdbcType=VARCHAR},
+                #{item.userType,jdbcType=TINYINT},
+                #{item.userStatus,jdbcType=TINYINT},
+                now(),
+                now(),
+                #{item.createUser,jdbcType=VARCHAR},
+                #{item.createUser,jdbcType=VARCHAR},
+                0
+            </trim>
+        </foreach>
+    </insert>
+
+    <select id="findUserList" resultMap="BaseResultMap" parameterType="UserCondition">
+        select
+        <include refid="allColumns"/>
+        from USER
+        <where>
+            <if test="id != null and id != 0">
+                and id = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="username != null and username != ''">
+                and username = #{username,jdbcType=VARCHAR}
+            </if>
+            <if test="password != null and password != ''">
+                and password = #{password,jdbcType=VARCHAR}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone,jdbcType=VARCHAR}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email,jdbcType=VARCHAR}
+            </if>
+            <if test="userType != null">
+                and user_type = #{userType,jdbcType=TINYINT}
+            </if>
+            <if test="userStatus != null">
+                and user_status = #{userStatus,jdbcType=TINYINT}
+            </if>
+            <choose>
+                <when test="isDelete != null">
+                    and is_delete = #{isDelete,jdbcType=TINYINT}
+                </when>
+                <otherwise>
+                    and is_delete = 0
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from user where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <update id="updateUser" parameterType="User">
+        update USER
+        <set>
+            <trim>
+                <if test="username != null and username != ''">
+                    last_name = #{lastName,jdbcType=VARCHAR},
+                </if>
+                <if test="password != null and password != ''">
+                    password = #{password,jdbcType=VARCHAR},
+                </if>
+                <if test="phone != null and phone != ''">
+                    phone = #{phone,jdbcType=VARCHAR},
+                </if>
+                <if test="email != null and email != ''">
+                    email = #{email,jdbcType=VARCHAR},
+                </if>
+                <if test="userType != null">
+                    user_type = #{userType,jdbcType=INTEGER},
+                </if>
+                <if test="userStatus != null">
+                    user_status = #{userStatus,jdbcType=INTEGER},
+                </if>
+            </trim>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>
