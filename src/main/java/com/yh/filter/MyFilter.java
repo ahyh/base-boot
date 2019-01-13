@@ -25,10 +25,10 @@ public class MyFilter implements Filter {
             servletResponse.getWriter().write("Invaild request");
             return;
         }
-        if (!remoteAddr.startsWith("192.168.")) {
-            servletResponse.getWriter().write("Invaild request");
-            return;
-        }
+//        if (!remoteAddr.startsWith("192.168.")) {
+//            servletResponse.getWriter().write("Invaild request");
+//            return;
+//        }
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

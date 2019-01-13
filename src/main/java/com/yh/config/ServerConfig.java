@@ -1,6 +1,7 @@
 package com.yh.config;
 
 import com.yh.filter.MyFilter;
+import com.yh.listener.ApplicationStartListener;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,6 +26,11 @@ public class ServerConfig {
         registrationBean.setFilter(new MyFilter());
         registrationBean.setUrlPatterns(Arrays.asList("/*"));
         return registrationBean;
+    }
+
+    @Bean
+    public ApplicationStartListener applicationStartListener(){
+        return new ApplicationStartListener();
     }
 
 }
