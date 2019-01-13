@@ -13,6 +13,10 @@ public class UserCondition extends BaseDomain {
 
     private String password;
 
+    private String phone;
+
+    private String email;
+
     private Integer userType;
 
     private Integer userStatus;
@@ -47,5 +51,21 @@ public class UserCondition extends BaseDomain {
 
     public void setUserStatus(Integer userStatus) {
         this.userStatus = userStatus;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
