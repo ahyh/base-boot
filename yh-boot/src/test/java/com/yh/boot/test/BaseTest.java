@@ -1,4 +1,4 @@
-package com.yh;
+package com.yh.boot.test;
 
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

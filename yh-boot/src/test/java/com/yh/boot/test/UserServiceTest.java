@@ -1,4 +1,4 @@
-package com.yh;
+package com.yh.boot.test;
 
 import com.yh.pojo.User;
 import com.yh.service.UserService;
