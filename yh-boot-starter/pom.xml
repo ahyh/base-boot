@@ -8,9 +8,10 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>yh-boot</artifactId>
-    <packaging>jar</packaging>
-    <name>yh-boot</name>
+
+    <artifactId>yh-boot-starter</artifactId>
+
+    <name>yh-boot-starter</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
 
@@ -82,20 +83,5 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
-
-        <!-- 加密解密工具 -->
-        <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-            <version>1.10</version>
-        </dependency>
-
-        <!-- 加密解密工具 -->
-        <dependency>
-            <groupId>org.bouncycastle</groupId>
-            <artifactId>bcprov-jdk16</artifactId>
-            <version>1.46</version>
-        </dependency>
     </dependencies>
-
 </project>

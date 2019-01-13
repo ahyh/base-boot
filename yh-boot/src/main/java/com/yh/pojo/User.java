@@ -1,5 +1,7 @@
 package com.yh.pojo;
 
+import com.yh.annotations.EncrypAnnotation;
+
 /**
  * User对象
  *
@@ -9,6 +11,7 @@ public class User extends BaseDomain {
 
     private String username;
 
+    @EncrypAnnotation
     private String password;
 
     private String phone;
