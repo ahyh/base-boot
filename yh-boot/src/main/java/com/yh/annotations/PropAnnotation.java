@@ -1,4 +1,4 @@
-package com.yh.annoations;
+package com.yh.annotations;
 
 import java.lang.annotation.*;
 
@@ -8,7 +8,7 @@ import java.lang.annotation.*;
 @Target({ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface PropAnnoation {
+public @interface PropAnnotation {
 
     String createUser() default "system";
 

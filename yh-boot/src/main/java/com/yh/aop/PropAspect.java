@@ -1,6 +1,6 @@
 package com.yh.aop;
 
-import com.yh.annoations.PropAnnoation;
+import com.yh.annotations.PropAnnotation;
 import com.yh.utils.ReflectUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -26,7 +26,7 @@ public class PropAspect {
     /**
      * 切在方法入参中使用PropAnnoation注解修饰的入参
      */
-    @Before(value = "execution(* *.* (.., @com.yh.annoations.PropAnnoation (*), ..))")
+    @Before(value = "execution(* *.* (.., @com.yh.annotations.PropAnnotation (*), ..))")
     public void before(JoinPoint joinPoint) throws Throwable {
         logger.info("PropAspect before");
         Object[] args = joinPoint.getArgs();
@@ -43,8 +43,8 @@ public class PropAspect {
                 Annotation[] annotations = parameterAnnotations[i];
                 for (int j = 0; j < annotations.length; j++) {
                     Annotation annotation = annotations[j];
-                    if (annotation.annotationType().equals(PropAnnoation.class)) {
-                        PropAnnoation pa = (PropAnnoation) annotation;
+                    if (annotation.annotationType().equals(PropAnnotation.class)) {
+                        PropAnnotation pa = (PropAnnotation) annotation;
                         String createUser = pa.createUser();
                         Object param = args[i];
                         Class<?> parameterType = parameterTypes[i];

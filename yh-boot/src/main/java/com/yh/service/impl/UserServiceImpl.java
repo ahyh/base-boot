@@ -1,7 +1,7 @@
 package com.yh.service.impl;
 
 import com.google.common.base.Preconditions;
-import com.yh.annoations.PropAnnoation;
+import com.yh.annotations.PropAnnotation;
 import com.yh.dao.UserDao;
 import com.yh.pojo.User;
 import com.yh.pojo.condition.UserCondition;
@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Override
-    public Integer insert(@PropAnnoation(createUser = "yanhuan") User user) {
+    public Integer insert(@PropAnnotation(createUser = "yanhuan") User user) {
         Preconditions.checkNotNull(user);
         return userDao.insert(user);
     }
