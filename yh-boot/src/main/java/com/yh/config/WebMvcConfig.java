@@ -1,5 +1,6 @@
 package com.yh.config;
 
+import com.yh.interceptors.MethodInvocationInterceptor;
 import com.yh.interceptors.ParamsCheckInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,6 +34,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
             public void addInterceptors(InterceptorRegistry registry) {
                 registry.addInterceptor(new ParamsCheckInterceptor()).addPathPatterns("/**")
                         .excludePathPatterns("/index.html", "/", "/user/login", "/userlogin", "/level*");
+                registry.addInterceptor(new MethodInvocationInterceptor()).addPathPatterns("/**");
             }
         };
         return adapter;
