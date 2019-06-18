@@ -2,18 +2,23 @@ package com.yh.other.test.redis;
 
 import com.yh.boot.test.BaseTest;
 import com.yh.cache.RedisService;
+import com.yh.service.SecondKillService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class RedisServiceTest extends BaseTest {
 
     @Autowired
     private RedisService redisService;
+
+    @Autowired
+    private SecondKillService secondKillService;
 
     @Test
     public void testSet() {
@@ -45,4 +50,46 @@ public class RedisServiceTest extends BaseTest {
     public void testExists() {
         System.out.println(redisService.exists("key1"));
     }
+
+    @Test
+    public void testSadd() {
+        String key = "set-test";
+        String value1 = "v1";
+        String value2 = "v2";
+        boolean sadd = redisService.sadd(key, value1, value2);
+        System.out.println(sadd);
+    }
+
+    @Test
+    public void testSetMembers() {
+        String key = "set-test";
+        Set<Object> objects = redisService.setMembers(key);
+        System.out.println(objects);
+    }
+
+    @Test
+    public void testSismember() {
+        String key = "set-test";
+        String value = "v1";
+        boolean sismember = redisService.sismember(key, value);
+        System.out.println(sismember);
+    }
+
+    @Test
+    public void testskAddSku(){
+        String skuId = "sku123456";
+        Integer count = 100;
+        boolean set = redisService.set("sk:" + skuId + ":count", count);
+        Assert.assertTrue(set);
+    }
+
+    @Test
+    public void testSk() throws Exception {
+        String skuId = "sku123456";
+        String userId = "chenjian1";
+        boolean b = secondKillService.secondKill(skuId, userId);
+        System.out.println(b);
+    }
+
+
 }

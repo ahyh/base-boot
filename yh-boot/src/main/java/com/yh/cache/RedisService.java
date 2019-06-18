@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.io.Serializable;
 import java.util.List;
@@ -75,13 +76,49 @@ public class RedisService {
         }
     }
 
+    /**
+     * redis事务实现秒杀功能
+     *
+     * @param skuId  商品id
+     * @param userId 用户id
+     * @return 是否秒杀成功
+     */
+    public boolean secondkill(String skuId, String userId) {
+        String skuCountKey = "sk:" + skuId + ":count";
+        String memberKey = "sk:" + skuId + ":userIds";
+        redisTemplate.setEnableTransactionSupport(true);
+        redisTemplate.watch(skuCountKey);
+        ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
+        SetOperations<String, Object> set = redisTemplate.opsForSet();
+        Integer skuCount = Integer.valueOf(operations.get(skuCountKey).toString());
+        if (skuCount <= 0) {
+            throw new RuntimeException("商品秒杀完了，没有库存了");
+        }
+        //如果商品还有库存，则开启redis事务
+        redisTemplate.multi();
+        set.add(memberKey, userId);
+        operations.increment(skuCountKey, -1);
+        List list = redisTemplate.exec();
+        if (CollectionUtils.isEmpty(list)) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * watch监控
+     *
+     * @param key 需要监控的键
+     */
+    public void watch(String key) {
+        redisTemplate.watch(key);
+    }
 
     /**
      * 递增
      *
      * @param key   键
      * @param delta 要增加几(大于0)
-     * @return
      */
     public long incr(String key, long delta) {
         if (delta < 0) {
@@ -188,9 +225,22 @@ public class RedisService {
      * @param key   键
      * @param value 值
      */
-    public void sdd(String key, Object value) {
+    public boolean sadd(String key, Object value) {
         SetOperations<String, Object> set = redisTemplate.opsForSet();
-        set.add(key, value);
+        Long add = set.add(key, value);
+        if (Long.valueOf("1").equals(add)) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean sadd(String key, Object... values) {
+        SetOperations<String, Object> set = redisTemplate.opsForSet();
+        Long add = set.add(key, values);
+        if (Long.valueOf(values.length).equals(add)) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -202,6 +252,11 @@ public class RedisService {
     public Set<Object> setMembers(String key) {
         SetOperations<String, Object> set = redisTemplate.opsForSet();
         return set.members(key);
+    }
+
+    public boolean sismember(String key, Object value) {
+        SetOperations<String, Object> set = redisTemplate.opsForSet();
+        return set.isMember(key, value);
     }
 
     /**
