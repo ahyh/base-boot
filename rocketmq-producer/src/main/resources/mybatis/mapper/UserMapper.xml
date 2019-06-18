@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yh.boot.mq.rocket.producer.dao.UserDao">
+
+    <resultMap id="BaseResultMap" type="User">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="age" property="age" jdbcType="INTEGER"/>
+        <result column="salary" property="salary" jdbcType="DECIMAL"/>
+    </resultMap>
+
+    <sql id="allColumnsWithOutId">
+        (name,age,salary)
+    </sql>
+
+    <sql id="allColumns">
+        id,name,age,salary
+    </sql>
+
+    <select id="getUserById" resultType="User">
+        SELECT * FROM user WHERE id=#{id,jdbcType=BIGINT}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user
+        <include refid="allColumnsWithOutId"/>
+        values (
+        #{name,jdbcType=VARCHAR},
+        #{age,jdbcType=INTEGER},
+        #{salary,jdbcType=DECIMAL}
+        )
+    </insert>
+
+    <insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into USER
+        <include refid="allColumnsWithOutId"/>
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            <trim prefix="(" suffix=")">
+                #{item.name,jdbcType=VARCHAR},
+                #{item.age,jdbcType=INTEGER},
+                #{item.salary,jdbcType=DECIMAL}
+            </trim>
+        </foreach>
+    </insert>
+
+    <select id="findUserList" resultMap="BaseResultMap" parameterType="UserCondition">
+        select
+        <include refid="allColumns"/>
+        from USER
+        <where>
+            <if test="id != null and id != 0">
+                and id = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="age != null and age != ''">
+                and age = #{age,jdbcType=INTEGER}
+            </if>
+            <if test="salary != null and salary != ''">
+                and salary = #{salary,jdbcType=DECIMAL}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from user where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <update id="updateUser" parameterType="User">
+        update USER
+        <set>
+            <trim>
+                <if test="name != null and name != ''">
+                    name = #{name,jdbcType=VARCHAR},
+                </if>
+                <if test="age != null and age != ''">
+                    age = #{age,jdbcType=INTEGER},
+                </if>
+                <if test="salary != null and salary != ''">
+                    salary = #{salary,jdbcType=DECIMAL},
+                </if>
+            </trim>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+</mapper>
