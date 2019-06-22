@@ -1,0 +1,56 @@
+Step-0 准备6台机器，3主3从，确保可以联网用于搭建Redis集群
+
+Step-1 安装gcc编译器
+    通过gcc -v查看是否已经安装了gcc，如果没有gcc编译器 执行如下两条命令安装gcc编译器（6台机器都要执行）
+    # yum install gcc
+    # yum install gcc-c++
+
+Step-2 安装ruby环境
+    ruby -v，查看是否有ruby环境，redis-3.2.5版本需要ruby-2.3以上版本
+    没有安装ruby，则执行如下命令安装ruby环境（6台机器都要执行）
+    # yum install centos-release-scl-rh
+    # yum install rh-ruby23 -y
+    # scl  enable  rh-ruby23 bash
+    安装完成后，通过ruby -v命令查看是否安装成功
+    安装ruby的redis接口程序
+    # gem install redis
+
+Step-3 拷贝redis的tar到机器上，解压，编译并安装
+    # tar -zxvf redis-3.2.5.tar.gz
+    # cd redis-3.2.5
+    # make PREFIX=/usr/local/redis3 install
+
+Step-4 拷贝redis.conf配置文件，修改配置文件
+    6台机器端口分配为：7111,7112,7113,7114,7115,7116
+    在每一台机器上创建一个目录用于保存配置文件
+    # mkdir -p /usr/local/redis3/cluster/{port}
+    # cp /usr/local/src/redis-3.0.3/redis.conf /usr/local/redis3/cluster/{port}/redis-{port}.conf
+
+    修改配置文件：
+    port {port} //每一台机器端口不一样
+    dameonize yes //后台方式运行
+    pidfile /var/run/redis-{port}.pid //进程号文件
+    cluster-enabled yes //开启集群模式
+    cluster-config-file /usr/local/redis3/cluster/{port}/nodes.conf //集群配置文件
+    cluster-node-timeout 15000 //节点互联超时时间
+    cluster-migration-barrier 1 //数据迁移副本临界数
+    cluster-require-full-coverage yes //
+    appendonly yes //开启AOF方式持久化
+    dir /usr/local/redis3/cluster/7111 //节点数据持久化存放目录
+
+    注：需要注释掉 bind 127.0.0.1 ,这一行打开表示只能本机连接
+        protected-mode no ,关闭保护模式
+
+Step-5 逐个机器启动redis
+    # /usr/local/redis3/bin/redis-server /usr/local/redis3/cluster/{port}/redis-{port}.conf
+    通过ps -ef|grep redis命令查看redis是否启动成功
+    如果成功，提示：
+    root       4898      1  0 14:55 ?        00:00:04 /usr/local/redis3/bin/redis-server *:7113 [cluster]
+
+Step-6 在某一台机器上将redis目录下/src/redis-trib.rb文件拷贝到/usr/local/bin目录下
+    拷贝完成后，执行：redis-trib.rb create --replicas 1 192.168.0.123:7114 192.168.0.124:7115 192.168.0.125:7116 192.168.0.120:7111 192.168.0.121:7112 192.168.0.122:7113
+    提示如下说明集群搭建成功：
+    [OK] All nodes agree about slots configuration.
+    >>> Check for open slots...
+    >>> Check slots coverage...
+    [OK] All 16384 slots covered.
