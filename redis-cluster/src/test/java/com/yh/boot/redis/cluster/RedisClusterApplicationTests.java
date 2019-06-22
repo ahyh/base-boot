@@ -1,4 +1,4 @@
-package com.yh.boot.rediscluster;
+package com.yh.boot.redis.cluster;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

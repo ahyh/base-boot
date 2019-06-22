@@ -1,4 +1,4 @@
-package com.yh.boot.rediscluster.config;
+package com.yh.boot.redis.cluster.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
