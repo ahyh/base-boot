@@ -27,5 +27,5 @@ base-boot使用springboot搭建的基础开发框架
 ### 9、使用rocketmq消费者demo
 ### 10、SpringBoot+dubbo服务注册
 ### 11、SpringBoot+dubbo服务消费
-### 10、搭建redis集群，SpringBoot+redis集群
-### 11、SpringBoot+redis集群实现Session共享
+### 12、搭建redis集群，SpringBoot+redis集群
+### 13、SpringBoot+redis集群实现Session共享
