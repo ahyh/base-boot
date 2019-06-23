@@ -22,3 +22,10 @@ base-boot使用springboot搭建的基础开发框架
 在此模块中写入@Configuration，@ConfigurationProperties定义的组件 
 在resources目录下创建目录META-INF，在此目录下新建spring.factories文件
 在spring.factories文件中定义org.springframework.boot.autoconfigure.EnableAutoConfiguration=自己定义的配置类
+
+### 8、使用rocketmq生产者demo
+### 9、使用rocketmq消费者demo
+### 10、SpringBoot+dubbo服务注册
+### 11、SpringBoot+dubbo服务消费
+### 12、搭建redis集群，SpringBoot+redis集群
+### 13、SpringBoot+redis集群实现Session共享
