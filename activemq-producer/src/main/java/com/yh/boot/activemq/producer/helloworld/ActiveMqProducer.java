@@ -30,6 +30,8 @@ public class ActiveMqProducer {
         Queue queue = session.createQueue(DESTINATION);
         //5-创建生产者
         MessageProducer producer = session.createProducer(queue);
+        //设置消息的持久化，在ActiveMQ宕机后重启，消息仍然存在，保证消息的可靠性，未消费的消息重启后不会丢失，
+        producer.setDeliveryMode(DeliveryMode.PERSISTENT);
         //6-发送3条消息
         for (int i = 0; i < 3; i++) {
             //创建TextMessage并发送

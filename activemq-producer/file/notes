@@ -1,0 +1,9 @@
+1-如何保证消息的可靠性？
+    消息的生产者设置持久化，默认是持久化（Queue默认是持久化的）
+    producer.setDeliveryMode(DeliveryMode.PERSISTENT);
+
+    开启事务，开启事务后session.commit();才会正常发送，事务偏生产者
+    抛出异常可以通过session.rollback();进行回滚
+
+    开启签收模式，Session.CLIENT_ACKNOWLEDGE，手动签收
+    消费完成后调用message.acknowledge();手动签收确认消费成功
