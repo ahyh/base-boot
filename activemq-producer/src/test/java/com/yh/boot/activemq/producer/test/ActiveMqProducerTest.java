@@ -14,14 +14,14 @@ public class ActiveMqProducerTest extends ActivemqProducerApplicationTests {
     @Test
     public void testSendQueue() {
         String queueName = "boot-activemq-queue";
-        boolean flag = producer.send2Queue(queueName, "love story");
+        boolean flag = producer.send2Queue(queueName, "love story1");
         Assert.assertTrue(flag);
     }
 
     @Test
     public void testSendTopic() {
         String topicName = "boot-activemq-topic";
-        boolean flag = producer.send2Topic(topicName, "This is a topic message");
+        boolean flag = producer.send2Topic(topicName, "This is a topic message1");
         Assert.assertTrue(flag);
     }
 }
