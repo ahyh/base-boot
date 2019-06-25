@@ -7,3 +7,24 @@
 
     开启签收模式，Session.CLIENT_ACKNOWLEDGE，手动签收
     消费完成后调用message.acknowledge();手动签收确认消费成功
+
+
+2-持久化消息
+    Step-1：拷贝mysql-connector-java-5.1.38.jar到activemq解压目录中/lib文件夹下
+    Step-2：修改配置文件，activemq.xml
+            <bean id="mysql-ds" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+            			<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+            			<property name="url" value="jdbc:mysql://192.168.0.123:3306/activemq" />
+            			<property name="username" value="root" />
+            			<property name="password" value="Ahutyh123!"/>
+            			<property name="maxTotal" value="200"/>
+            			<property name="poolPreparedStatements" value="true"/>
+            </bean>
+            # 这个bean配置标签需要放在</broker>之后，<import jetty.xml>之前
+            <persistenceAdapter>
+                    <!-- <kahaDB directory="${activemq.data}/kahadb"/>-->
+                    <jdbcPersistenceAdapter dataSource="#mysql-ds" createTablesOnStartup="true"/>
+            </persistenceAdapter>
+
+    Step-3：建库activemq
+    Step-4：cd进入activemq/bin目录下，./activemq start启动activemq，查看数据库建表成功

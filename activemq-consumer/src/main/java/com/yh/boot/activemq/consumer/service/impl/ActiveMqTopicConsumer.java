@@ -17,7 +17,7 @@ public class ActiveMqTopicConsumer implements Consumer {
 
     private static final Logger logger = LoggerFactory.getLogger(ActiveMqTopicConsumer.class);
 
-    @JmsListener(destination = "${mytopic}",containerFactory = "topicListenerContainerFactory")
+    @JmsListener(id = "${mytopic}", destination = "${mytopic}",subscription = "clientId",containerFactory = "topicListenerContainerFactory")
     @Override
     public void consume(Message message) {
         logger.info("ActiveMqTopicConsumer consume message:{}", message);
