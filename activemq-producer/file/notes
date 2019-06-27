@@ -28,3 +28,22 @@
 
     Step-3：建库activemq
     Step-4：cd进入activemq/bin目录下，./activemq start启动activemq，查看数据库建表成功
+
+
+ 3-Zookeeper+Replicated LevelDB Store，搭建ActiveMQ集群
+    Step-1：启动Zookeeper集群
+    Step-2：将ActiveMQ解压文件拷贝到3台机器上
+    Step-3：修改activemq.xml中<broker>标签中，brokerName属性，要相同
+    Step-4：修改activemq.xml中的持久化方案
+            <persistenceAdapter>
+                <replicatedLevelDB
+                  directory="${activemq.data}/leveldb"
+                  replicas="3"
+                  bind="tcp://0.0.0.0:63631"
+                  zkAddress="192.168.0.120:2181,192.168.0.121:2181,192.168.0.122:2181"
+                  zkPath="/activemq/leveldb-stores"
+                  hostname="mini3"
+                  />
+            </persistenceAdapter>
+    Step-5：启动activemq
+    Step-6：./zkCli.sh -server mini1:2181，通过这个命令查看zk上是否有activemq的数据
