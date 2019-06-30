@@ -20,6 +20,7 @@
         <module>redis-cluster</module>
         <module>activemq-producer</module>
         <module>activemq-consumer</module>
+        <module>base-java8</module>
     </modules>
 
     <name>base-boot</name>
