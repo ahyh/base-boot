@@ -20,6 +20,9 @@
         <module>redis-cluster</module>
         <module>activemq-producer</module>
         <module>activemq-consumer</module>
+        <module>kafka-producer</module>
+        <module>kafka-consumer</module>
+        <module>fastdfs-demo</module>
         <module>base-java8</module>
     </modules>
 
@@ -203,7 +206,7 @@
             <dependency>
                 <groupId>com.github.tobato</groupId>
                 <artifactId>fastdfs-client</artifactId>
-                <version>1.25.2-RELEASE</version>
+                <version>1.26.5</version>
             </dependency>
 
         </dependencies>
