@@ -2,6 +2,7 @@ package com.yh.java8.stream;
 
 import com.yh.java8.pojo.Apple;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +38,20 @@ public class AppleStream {
         return apples.parallelStream().collect(Collectors.groupingBy(Apple::getColor));
     }
 
+    /**
+     * flatMap方法，获取扁平流
+     *
+     * @param args 字符串数组
+     * @return 字符串数组中单个字符集合，去重
+     */
+    private static List<String> flatMapString(String[] args) {
+        return Arrays.stream(args)
+                .map(word -> word.split(""))
+                .flatMap(Arrays::stream)
+                .distinct()
+                .collect(Collectors.toList());
+    }
+
     public static void main(String[] args) {
         List<Apple> apples = filterRedApplesOrderByWeight(Apple.apples);
         apples.forEach(System.out::println);
@@ -48,6 +63,10 @@ public class AppleStream {
             value.forEach(System.out::println);
             System.out.println("=========================");
         }
+
+        String[] wordList = {"Hello", "world"};
+        List<String> charsList = flatMapString(wordList);
+        charsList.forEach(System.out::println);
     }
 
 
