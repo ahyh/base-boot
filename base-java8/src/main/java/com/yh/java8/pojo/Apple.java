@@ -19,7 +19,7 @@ public class Apple implements Serializable {
         apples.add(new Apple("green", 100));
         apples.add(new Apple("green", 120));
         apples.add(new Apple("green", 150));
-        apples.add(new Apple("green", 150));
+        apples.add(new Apple("green", 180));
         apples.add(new Apple("yellow", 100));
         apples.add(new Apple("yellow", 130));
         apples.add(new Apple("yellow", 150));
