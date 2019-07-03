@@ -6,6 +6,8 @@ import java.util.Optional;
 
 /**
  * 归约操作
+ *
+ * @author yanhuan
  */
 public class ReduceDemo {
 
