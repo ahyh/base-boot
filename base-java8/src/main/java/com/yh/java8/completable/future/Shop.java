@@ -14,10 +14,10 @@ public class Shop {
 
     private String name;
 
-    public Shop(){
+    public Shop() {
     }
 
-    public Shop(String name){
+    public Shop(String name) {
         this.name = name;
     }
 
@@ -49,6 +49,12 @@ public class Shop {
      */
     public Future<Double> getPriceAsync2(String product) {
         return CompletableFuture.supplyAsync(() -> calculatePrice(product));
+    }
+
+    public String getPrice2(String product) {
+        double price = calculatePrice(product);
+        Discount.Code code = Discount.Code.values()[random.nextInt(Discount.Code.values().length)];
+        return String.format("%s:%.2f:%s", name, price, code);
     }
 
     /**
