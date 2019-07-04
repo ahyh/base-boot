@@ -91,6 +91,11 @@ public class CollectorsDemo {
                 collect(Collectors.groupingBy(Apple::getColor, Collectors.maxBy(Comparator.comparing(Apple::getWeight))));
         System.out.println(color2MaxWeightAppleMap);
 
+        //求出每一种颜色Apple的weight总和，按颜色分类
+        Map<String, Integer> color2SumWeightMap = Apple.apples.stream().collect(Collectors.groupingBy(Apple::getColor, Collectors.summingInt(Apple::getWeight)));
+        System.out.println(color2SumWeightMap);
+
+
 
     }
 }
