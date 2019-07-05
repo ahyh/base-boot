@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+	<include resource="org/springframework/boot/logging/logback/base.xml" />
+	<jmxConfigurator />
+
+	<!-- 定义日志文件 输入位置 参考：https://github.com/spring-projects/spring-boot/issues/2558   解决 LOG_PATH_IS_UNDEFINED directory问题 -->
+	<property name="log_dir" value="${LOG_PATH:-/iflytek/logs/@project.artifactId@}" />
+
+	<!-- 日志最大的历史 30天 -->
+	<property name="maxHistory" value="30" />
+
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${log_dir}/@project.artifactId@.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>${maxHistory}</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<root level="INFO">
+		<appender-ref ref="FILE" />
+	</root>
+
+</configuration>  
