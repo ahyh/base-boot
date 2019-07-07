@@ -25,6 +25,8 @@
         <module>fastdfs-demo</module>
         <module>base-java8</module>
         <module>mybatis-demo</module>
+        <module>elasticsearch-demo</module>
+        <module>zk-demo</module>
     </modules>
 
     <name>base-boot</name>

@@ -1,0 +1,10 @@
+Paxos算法
+Paxos算法是基于消息传递的且具有高度容错性的一致性算法，是目前公认的解决分布式一致性问题最有效的算法之一
+
+阶段一
+1、Proposer（提案人）选择一个提案编号Mn，然后向Acceptor（接受人）的某个超过半数的子集城阳发送编号为Mn的Prepare请求
+2、如果一个Acceptor收到一个编号为Mn的请求，且编号Mn大于该Acceptor已经响应的所有的Prepare请求的编号，那么它就会将自己批准过的最大编号的提案作为响应反馈给Proposer，同时该Acceptor承诺不再批准任何编号小于Mn的提案
+
+阶段二
+1、如果Proposer收到来自半数以上的Acceptor对于其发出的编号为Mn的Prepare请求的响应，那么它就会发送一个针对[Mn,Vn]提案的Accept请求给Acceptor。Vn的值就是收到的响应中编号最大的提案值，如果响应中不包含任何提案，那么它就是任意值
+2、如果Acceptor收到这个针对[Mn,Vn]提案的Accept请求，只要该Acceptor尚未对编号大于Mn的Prepare请求作出响应，它就可以通过这个提案
