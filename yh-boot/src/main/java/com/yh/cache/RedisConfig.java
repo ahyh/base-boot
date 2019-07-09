@@ -42,29 +42,4 @@ public class RedisConfig {
         return template;
     }
 
-    /**
-     * 管理缓存
-     */
-    @Bean
-    public CacheManager cacheManager(RedisTemplate redisTemplate) {
-        return new RedisCacheManager(redisTemplate);
-    }
-
-    /**
-     * 生成key的策略
-     *
-     * @return
-     */
-    @Bean
-    public KeyGenerator keyGenerator() {
-        return (target, method, params) -> {
-            StringBuilder sb = new StringBuilder();
-            sb.append(target.getClass().getName());
-            sb.append(method.getName());
-            for (Object obj : params) {
-                sb.append(obj.toString());
-            }
-            return sb.toString();
-        };
-    }
 }

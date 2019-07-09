@@ -27,6 +27,7 @@
         <module>mybatis-demo</module>
         <module>elasticsearch-demo</module>
         <module>zk-demo</module>
+        <module>boot-mail</module>
     </modules>
 
     <name>base-boot</name>
