@@ -1,0 +1,24 @@
+#启动Zookeeper
+./zkServer.sh start
+
+#查看zookeeper状态
+./zkServer.sh status
+
+#启动Zookeeper客户端
+./zkCli.sh -server {ip}:{port}
+
+#查看Zookeeper节点
+ls /
+
+#查看Zookeeper节点数据
+get /path
+
+#创建节点
+create [-s] [-e] path data acl
+
+#更新数据
+set path data [version]
+
+#删除数据
+delete path [version]
+
