@@ -3,6 +3,7 @@ package com.yh.zk;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooKeeper;
+import org.apache.zookeeper.data.Stat;
 
 import java.util.List;
 
@@ -22,5 +23,15 @@ public class ZkDemo {
         });
         List<String> children = zooKeeper.getChildren("/zk-book", true);
         children.forEach(System.out::println);
+
+        Stat stat = new Stat();
+        byte[] data = zooKeeper.getData("/zk-book", new Watcher() {
+            @Override
+            public void process(WatchedEvent event) {
+                System.out.println("WatchedEvent:" + event);
+            }
+        }, stat);
+        System.out.println(new String(data));
+        System.out.println("Stat:" + stat);
     }
 }

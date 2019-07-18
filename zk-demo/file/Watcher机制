@@ -32,8 +32,8 @@ public ZooKeeper(String connectString, int sessionTimeout, Watcher watcher) thro
 public byte[] getData(String path, boolean watch, Stat stat)  throws KeeperException, InterruptedException;
 步骤如下：
 0-判断是否传入Watcher对象，以下步骤假设传入Watcher对象
-1-将Watcher对象封装在WatcherRegistration对象中，保存数据节点路径和Watcher对应关系
-2-将WatcherRegistration对象封装在Packet中，然后放入发送队列outgoingQueue中
+1-将Watcher对象封装在WatchRegistration对象中，保存数据节点路径和Watcher对应关系
+2-将WatchRegistration对象封装在Packet中，然后放入发送队列outgoingQueue中
 3-客户端发送outgoingQueue中Packet对象到服务器上
 4-客户端启动的SendThread中的readResponse方法负责接收服务端的响应，调用finishPacket方法从响应中取出对应的Watcher并注册到ZKWatcherManager中
 
