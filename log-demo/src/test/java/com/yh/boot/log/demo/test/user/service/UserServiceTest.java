@@ -1,4 +1,4 @@
-package com.yh.boot.log.demo.test.user;
+package com.yh.boot.log.demo.test.user.service;
 
 import com.alibaba.fastjson.JSON;
 import com.yh.boot.log.demo.LogDemoApplicationTests;

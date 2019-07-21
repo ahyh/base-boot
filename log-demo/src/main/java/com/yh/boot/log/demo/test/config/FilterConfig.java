@@ -1,4 +1,4 @@
-package com.yh.boot.log.demo.config;
+package com.yh.boot.log.demo.test.config;
 
 import ch.qos.logback.classic.helpers.MDCInsertingServletFilter;
 import com.yh.boot.log.demo.filter.LogRequestIdFilter;
