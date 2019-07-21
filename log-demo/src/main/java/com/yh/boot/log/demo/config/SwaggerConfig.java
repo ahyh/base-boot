@@ -1,4 +1,4 @@
-package com.yh.boot.log.demo.test.config;
+package com.yh.boot.log.demo.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
