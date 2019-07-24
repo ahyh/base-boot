@@ -1,0 +1,18 @@
+Kibana使用——聚合分析
+1-设置field的类型
+PUT /goods/_mapping/product{  "properties": {    "tags":{      "type":"text",      "fielddata": true    }  }}
+
+2-聚合：按照tags里面的值分组，每个tag下的商品的数量
+GET /goods/product/_search{  "aggs": {    "group_by_tags": {      "terms": {        "field": "tags"      }    }  }}
+
+3-聚合：name中包含yagao的按照tag分组的商品数量
+GET /goods/product/_search{  "size": 0,  "query": {    "match": {      "name": "yagao"    }  },   "aggs": {    "group_by_tags": {      "terms": {        "field": "tags"      }    }  }}
+
+4-聚合：计算每个tag下的商品的平均价格
+GET /goods/product/_search{  "aggs": {    "group_by_tags": {      "terms": {        "field": "tags"      },      "aggs": {        "avg_price": {          "avg": {            "field": "price"          }        }      }    }  }}
+
+5-聚合：计算每个tag下的商品的平均价格，按平均价格降序排序
+GET /goods/product/_search{  "size": 0,   "aggs": {    "group_by_tags": {      "terms": {        "field": "tags",        "order": {          "avg_price": "desc"        }      },      "aggs": {        "avg_price": {          "avg": {            "field": "price"          }        }      }    }  }}
+
+6-聚合：按照指定的价格区间分组，然后再每组内按照tag进行分组，最后计算每组的平均价格
+GET /goods/product/_search{  "size": 0,  "aggs": {    "group_by_price": {      "range": {        "field": "price",        "ranges": [          {            "from": 0,            "to": 20          },          {            "from": 20,            "to":40          },          {            "from":40,            "to":60          }        ]      },      "aggs": {        "group_by_tags": {          "terms": {            "field": "tags"          },          "aggs": {            "average_price": {              "avg": {                "field": "price"              }            }          }        }      }    }  }}

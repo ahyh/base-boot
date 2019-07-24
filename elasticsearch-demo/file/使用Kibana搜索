@@ -1,0 +1,56 @@
+1-快速查看ES集群的状态
+GET _cat/health?v
+
+
+2-快速查看集群中有哪些索引Index
+GET _cat/indices?v
+
+3-快速创建索引
+PUT /test_index?pretty
+
+4-快速删除索引
+DELETE /test_index?pretty
+
+5-增
+PUT /goods/product/1{  "name":"gaolujie yagao",  "desc":"gaoxiao meibai",  "price":30,  "producer":"gaolujie producer",  "tags":["meibai","fangzhu"]}
+
+6-改，将需要修改的内容直接替换即可
+PUT请求重新数据数据更新
+PUT /goods/product/1{  "name":"jiaqiangban gaolujie yagao",  "desc":"gaoxiao meibai",  "price":30,  "producer":"gaolujie producer",  "tags":["meibai","fangzhu"]}
+
+POST请求更新部分数据
+POST /goods/product/1/_update{  "doc": {    "name":"chaojiwudi jiaqiangban gaolujie yagao"  }}
+
+7-查
+GET /goods/product/1
+
+8-删
+GET /goods/product/3
+
+9-搜索
+9.1-query string search
+GET /goods/product/_search  #全局搜索GET /goods/product/_search?q=name:yagao&sort=price:desc  #全局搜索，按价格降序排序
+9.2-query DSL：Domain Sepcified Language
+查询所有
+GET /goods/product/_search{  "query": {    "match_all": {}  }}
+查询所有name包含yagao的商品，按price排序
+GET /goods/product/_search{  "query": {    "match": {      "name": "yagao"    }  },  "sort": [    {      "price": {        "order": "desc"      }    }  ]}
+分页查询，从第1个开始，搜索1个
+GET /goods/product/_search{  "query": {    "match_all": {}  },  "from": 1,  "size": 1}
+查询指定的field的值
+GET /goods/product/_search{  "query": {    "match_all": {}  },  "_source": ["name","price","desc"]}
+9.3-query filter，过滤器查询
+GET /goods/product/_search{  "query": {    "bool": {      "must": {        "match":{          "name":"yagao"        }      },      "filter": {        "range": {          "price": {            "gte": 10,            "lte": 20          }        }      }    }  }}
+9.4-full text search，全文检索
+GET /goods/product/_search{  "query": {    "match": {      "producer": "yagao producer"    }  }}
+按照producer字段的内容进行全文检索，给每一条的内容打分
+全文检索会将输入的搜索串拆解开来，去倒排索引里面去一一匹配，只要能够匹配上任意一个拆解后的单词，就可以作为hits返回
+
+9.5-phase search :短语搜索
+要求输入的搜索的串在指定的字段文本中完全包含，一模一样，如下这条语句只会匹配出producer是zhonghua producer的
+GET /goods/product/_search{  "query": {    "match_phrase": {      "producer": "zhonghua producer"    }  }}
+
+9.6-highlight search：高亮检索
+GET /goods/product/_search{  "query": {    "match_phrase": {      "producer": "zhonghua producer"    }  },  "highlight": {"fields": {"producer": {}}}}
+
+9.7-
