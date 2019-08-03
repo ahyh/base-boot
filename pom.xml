@@ -28,6 +28,7 @@
         <module>elasticsearch-demo</module>
         <module>zk-demo</module>
         <module>boot-mail</module>
+        <module>design-patterns</module>
     </modules>
 
     <name>base-boot</name>

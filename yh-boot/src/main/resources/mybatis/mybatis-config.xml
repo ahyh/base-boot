@@ -15,7 +15,7 @@
 
     <!-- 拦截器的配置放在typeAliases后面 -->
     <plugins>
-        <plugin interceptor="com.yh.mybatis.interceptors.SQLWhereInterceptor"></plugin>
+        <plugin interceptor="com.yh.mybatis.interceptors.SQLWhereInterceptor" ></plugin>
         <plugin interceptor="com.yh.mybatis.interceptors.EncrypInterceptor"></plugin>
     </plugins>
 
