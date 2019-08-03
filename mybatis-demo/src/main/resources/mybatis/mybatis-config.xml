@@ -11,6 +11,7 @@
     <!-- 定义别名 -->
     <typeAliases>
         <typeAlias type="com.yh.boot.mybatis.source.code.model.User" alias="User"/>
+        <typeAlias type="com.yh.boot.mybatis.source.code.model.UserQuery" alias="UserQuery"/>
     </typeAliases>
 
     <!-- 定义数据库信息，使用development环境构建-->

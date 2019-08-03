@@ -2,19 +2,11 @@ package com.yh.boot.mybatis.source.code.model;
 
 import lombok.Data;
 
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.util.Date;
 
-/**
- * user表映射对象
- *
- * @author huanyan2
- */
 @Data
-@Table(name = "user")
-public class User extends BaseDomain {
+public class User {
 
-    @Id
     private Long id;
 
     private String username;
@@ -28,4 +20,14 @@ public class User extends BaseDomain {
     private Byte userType;
 
     private Byte userStatus;
+
+    private String createUser;
+
+    private Date createTime;
+
+    private String updateUser;
+
+    private Date updateTime;
+
+    private Byte isDelete;
 }

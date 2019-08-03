@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yh.boot.mybatis.source.code.dao.UserDao">
+<mapper namespace="com.yh.boot.mybatis.source.code.dao.UserMapper">
 
     <resultMap id="BaseResultMap" type="User">
         <id column="id" property="id" jdbcType="BIGINT"/>
@@ -31,79 +31,24 @@
         SELECT * FROM user WHERE id=#{id,jdbcType=BIGINT}
     </select>
 
-    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO user
-        <include refid="allColumnsWithOutId"/>
-        values (
-        #{username,jdbcType=VARCHAR},
-        #{password,jdbcType=VARCHAR},
-        #{phone,jdbcType=VARCHAR},
-        #{email,jdbcType=VARCHAR},
-        #{userType,jdbcType=TINYINT},
-        #{userStatus,jdbcType=TINYINT},
-        now(),
-        now(),
-        #{createUser,jdbcType=VARCHAR},
-        #{createUser,jdbcType=VARCHAR},
-        0
-        )
-    </insert>
-
-    <insert id="insertBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
-        insert into USER
-        <include refid="allColumnsWithOutId"/>
-        values
-        <foreach collection="list" item="item" index="index" separator=",">
-            <trim prefix="(" suffix=")">
-                #{item.username,jdbcType=VARCHAR},
-                #{item.password,jdbcType=VARCHAR},
-                #{item.phone,jdbcType=VARCHAR},
-                #{item.email,jdbcType=VARCHAR},
-                #{item.userType,jdbcType=TINYINT},
-                #{item.userStatus,jdbcType=TINYINT},
-                now(),
-                now(),
-                #{item.createUser,jdbcType=VARCHAR},
-                #{item.createUser,jdbcType=VARCHAR},
-                0
-            </trim>
-        </foreach>
-    </insert>
-
-    <select id="findUserList" resultMap="BaseResultMap" >
+    <select id="findUserListByQuery" resultMap="BaseResultMap" parameterType="UserQuery">
         select
         <include refid="allColumns"/>
         from USER
+        <where>
+            <if test="id != null and id != 0">
+                and id = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="username != null and username != ''">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+        </where>
     </select>
 
-    <delete id="deleteById" parameterType="java.lang.Long">
-        delete from user where id = #{id,jdbcType=BIGINT}
-    </delete>
-
-    <update id="updateUser" parameterType="User">
-        update USER
-        <set>
-            <trim>
-                <if test="username != null and username != ''">
-                    last_name = #{lastName,jdbcType=VARCHAR},
-                </if>
-                <if test="password != null and password != ''">
-                    password = #{password,jdbcType=VARCHAR},
-                </if>
-                <if test="phone != null and phone != ''">
-                    phone = #{phone,jdbcType=VARCHAR},
-                </if>
-                <if test="email != null and email != ''">
-                    email = #{email,jdbcType=VARCHAR},
-                </if>
-                <if test="userType != null">
-                    user_type = #{userType,jdbcType=INTEGER},
-                </if>
-                <if test="userStatus != null">
-                    user_status = #{userStatus,jdbcType=INTEGER},
-                </if>
-            </trim>
-        </set>
-        where id = #{id,jdbcType=BIGINT}
-    </update>
 </mapper>
