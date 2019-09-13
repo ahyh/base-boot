@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yh.boot.log.demo.dao.UserDao">
+<mapper namespace="com.yh.spring.demo.mapper.UserMapper">
 
     <resultMap id="BaseResultMap" type="User">
         <id column="id" property="id" jdbcType="BIGINT"/>
@@ -72,7 +72,7 @@
         </foreach>
     </insert>
 
-    <select id="findUserList" resultMap="BaseResultMap" parameterType="UserCondition">
+    <select id="findUserList" resultMap="BaseResultMap" parameterType="User">
         select
         <include refid="allColumns"/>
         from USER

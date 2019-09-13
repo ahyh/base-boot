@@ -29,6 +29,7 @@
         <module>zk-demo</module>
         <module>boot-mail</module>
         <module>design-patterns</module>
+        <module>spring-demo</module>
     </modules>
 
     <name>base-boot</name>
