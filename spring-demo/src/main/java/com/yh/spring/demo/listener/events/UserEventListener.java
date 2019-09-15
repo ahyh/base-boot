@@ -1,4 +1,4 @@
-package com.yh.spring.demo.listener;
+package com.yh.spring.demo.listener.events;
 
 import com.alibaba.fastjson.JSON;
 import com.yh.spring.demo.event.UserAddEvent;
