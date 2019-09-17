@@ -1,5 +1,6 @@
 package com.yh.spring.demo.manager.impl;
 
+import com.yh.spring.demo.annotations.MethodAnnotation;
 import com.yh.spring.demo.manager.UserSalaryManager;
 import com.yh.spring.demo.mapper.SalaryMapper;
 import com.yh.spring.demo.mapper.UserMapper;
@@ -30,6 +31,7 @@ public class UserSalaryManagerImpl implements UserSalaryManager {
     @Resource
     private SalaryMapper salaryMapper;
 
+    @MethodAnnotation
     @Transactional(rollbackFor = RuntimeException.class)
     @Override
     public boolean insertUserWithSalary(User user, Salary salary) {

@@ -26,9 +26,9 @@ public class UserServiceTest extends BaseTest {
     @Test
     public void insertUserWithSalary() {
         User user = new User();
-        user.setUsername("u1");
-        user.setPassword("123456");
-        user.setEmail("ahyanhuan@126.com");
+        user.setUsername("u22");
+        user.setPassword("1234567");
+        user.setEmail("ahyanhuan@1226.com");
         user.setPhone("18611862917");
         user.setUserStatus(1);
         user.setUserType(2);
@@ -38,9 +38,9 @@ public class UserServiceTest extends BaseTest {
         user.setUpdateTime(new Date());
 
         Salary salary = new Salary();
-        salary.setName(user.getUsername());
+        salary.setName(user.getUsername()+"zm");
         salary.setAge(21);
-        salary.setCompany("zm");
+        salary.setCompany("zmzm");
         salary.setSalary(new BigDecimal("299.9"));
         salary.setSex((byte) 1);
         salary.setUpdateUser(user.getUpdateUser());
