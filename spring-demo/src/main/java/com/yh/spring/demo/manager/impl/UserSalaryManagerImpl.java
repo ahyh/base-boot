@@ -14,6 +14,8 @@ import javax.annotation.Resource;
 
 /**
  * 测试Spring事务
+ * 测试Spring事务提交和finally中方法执行顺序，断点位置
+ * DataSourceTransactionManager.doCommit，这个方法提交事务
  *
  * @author yanhuan
  */
