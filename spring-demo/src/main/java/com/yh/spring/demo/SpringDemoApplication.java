@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 /**
- * RocketMq消息发送主类
+ * 主启动类
  *
  * @author yanhuan
  */
