@@ -11,6 +11,7 @@ import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.core.Ordered;
@@ -28,6 +29,7 @@ import java.util.List;
  * @author yanhuan
  */
 @Component
+@ConditionalOnProperty(value = "redis.mapper.proxy", havingValue = "true")
 public class RedisMapperInfoCollectListener implements ApplicationListener<ContextRefreshedEvent>, Ordered {
 
     private static final Logger logger = LoggerFactory.getLogger(RedisMapperInfoCollectListener.class);

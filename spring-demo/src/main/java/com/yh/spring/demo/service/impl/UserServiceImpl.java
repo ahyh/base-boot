@@ -1,7 +1,9 @@
 package com.yh.spring.demo.service.impl;
 
 import com.yh.spring.demo.event.UserAddEvent;
+import com.yh.spring.demo.manager.UserSalaryManager;
 import com.yh.spring.demo.mapper.UserMapper;
+import com.yh.spring.demo.pojo.Salary;
 import com.yh.spring.demo.pojo.User;
 import com.yh.spring.demo.pojo.UserQuery;
 import com.yh.spring.demo.service.UserEventPublishService;
@@ -31,6 +33,9 @@ public class UserServiceImpl implements UserService {
     @Resource
     private UserEventPublishService userEventPublishService;
 
+    @Resource
+    private UserSalaryManager userSalaryManager;
+
     @Override
     public Integer insert(User user) {
         UserAddEvent userAddEvent = new UserAddEvent();
@@ -53,5 +58,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findUserByQuery(UserQuery userQuery) {
         return userMapper.findUserList(userQuery);
+    }
+
+    @Override
+    public boolean insertUserWithSalary(User user, Salary salary) {
+        return userSalaryManager.insertUserWithSalary(user, salary);
     }
 }

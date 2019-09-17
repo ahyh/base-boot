@@ -11,6 +11,9 @@
     <typeAliases>
         <typeAlias type="com.yh.spring.demo.pojo.User" alias="User"/>
         <typeAlias type="com.yh.spring.demo.pojo.UserQuery" alias="UserQuery"/>
+
+        <typeAlias type="com.yh.spring.demo.pojo.Salary" alias="Salary"/>
+        <typeAlias type="com.yh.spring.demo.pojo.SalaryQuery" alias="SalaryQuery"/>
     </typeAliases>
 
 </configuration>

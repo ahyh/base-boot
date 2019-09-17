@@ -1,5 +1,6 @@
 package com.yh.spring.demo.service;
 
+import com.yh.spring.demo.pojo.Salary;
 import com.yh.spring.demo.pojo.User;
 import com.yh.spring.demo.pojo.UserQuery;
 
@@ -17,4 +18,6 @@ public interface UserService {
     User getUserById(Long id);
 
     List<User> findUserByQuery(UserQuery userQuery);
+
+    boolean insertUserWithSalary(User user, Salary salary);
 }

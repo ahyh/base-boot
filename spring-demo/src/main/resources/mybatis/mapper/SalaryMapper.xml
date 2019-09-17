@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yh.spring.demo.mapper.SalaryMapper">
+
+    <resultMap id="BaseResultMap" type="Salary">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="age" property="age" jdbcType="INTEGER"/>
+        <result column="sex" property="sex" jdbcType="TINYINT"/>
+        <result column="company" property="company" jdbcType="VARCHAR"/>
+        <result column="salary" property="salary" jdbcType="DECIMAL"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="create_user" property="createUser" jdbcType="VARCHAR"/>
+        <result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
+        <result column="is_delete" property="isDelete" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="allColumnsWithOutId">
+        (name,age,sex,company,salary,create_time,update_time,create_user,update_user,is_delete)
+    </sql>
+
+    <sql id="allColumns">
+        id,name,age,sex,company,salary,create_time,update_time,create_user,update_user,is_delete
+    </sql>
+
+    <!-- 插入方法，插入后返回主键-->
+    <insert id="insert" parameterType="Salary" useGeneratedKeys="true" keyProperty="id">
+        insert into salary
+        <include refid="allColumnsWithOutId"/>
+        values (
+        #{name,jdbcType=VARCHAR},
+        #{age,jdbcType=INTEGER},
+        #{sex,jdbcType=TINYINT},
+        #{company,jdbcType=VARCHAR},
+        #{salary,jdbcType=DECIMAL},
+        now(),
+        now(),
+        #{createUser,jdbcType=VARCHAR},
+        #{createUser,jdbcType=VARCHAR},
+        0
+        )
+    </insert>
+
+    <update id="update" parameterType="Salary">
+        update salary
+        <set>
+            update_time = now(),update_user=#{updateUser,jdbcType=VARCHAR},
+            <trim>
+                <if test="name != null and name != ''">
+                    name = #{name,jdbcType=VARCHAR},
+                </if>
+                <if test="salary != null">
+                    salary = #{salary,jdbcType=DECIMAL},
+                </if>
+            </trim>
+        </set>
+        where id =#{id,jdbcType=BIGINT}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Long">
+        update salary set is_delete = 1,update_time = now() where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <select id="findSalaryByCondition" resultMap="BaseResultMap" parameterType="SalaryQuery">
+        SELECT
+        <include refid="allColumns"/>
+        from salary
+        <where>
+            <if test="id != null and id != 0">
+                and id = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="sex != null">
+                and sex = #{sex,jdbcType=TINYINT}
+            </if>
+            <if test="salary != null">
+                and salary = #{salary,jdbcType=DECIMAL}
+            </if>
+            <choose>
+                <when test="isDelete != null">
+                    and is_delete = #{isDelete,jdbcType=TINYINT}
+                </when>
+                <otherwise>
+                    and is_delete = 0
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+</mapper>
