@@ -30,6 +30,7 @@
         <module>boot-mail</module>
         <module>design-patterns</module>
         <module>spring-demo</module>
+        <module>netty-learn</module>
     </modules>
 
     <name>base-boot</name>
