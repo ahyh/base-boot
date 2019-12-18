@@ -38,7 +38,7 @@ public class MyHttpServerHandler extends SimpleChannelInboundHandler<HttpObject>
             URI uri = new URI(httpRequest.getUri());
             if ("/favicon.ico".equals(uri.getPath())) {
                 System.out.println("请求/favicon.ico,不做响应");
-                return; 
+                return;
             }
 
             //回复信息给浏览器
