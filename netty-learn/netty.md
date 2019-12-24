@@ -36,3 +36,5 @@ Netty模型总结
 1-Netty抽象出两组线程池，BossGroup专门负责处理连接，workerGroup专门负责网络读写操作
 2-NioEventLoop表示一个不断循环执行处理任务的线程，每个NioEventLoop都有一个selector，用于监听绑定在其上的socket网络通信
 3-NioEventLoop内部采用串行化设计，从消息读取、解码、处理、编码、发送，使用由IO线程NioEventLoop负责
+
+

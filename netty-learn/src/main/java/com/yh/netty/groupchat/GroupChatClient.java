@@ -56,6 +56,6 @@ public class GroupChatClient {
     }
 
     public static void main(String[] args) throws Exception {
-        new GroupChatClient("127.0.0.1", 7000).run();
+        new GroupChatClient("127.0.0.1", 8889).run();
     }
 }
