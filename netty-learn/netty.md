@@ -37,4 +37,13 @@ Netty模型总结
 2-NioEventLoop表示一个不断循环执行处理任务的线程，每个NioEventLoop都有一个selector，用于监听绑定在其上的socket网络通信
 3-NioEventLoop内部采用串行化设计，从消息读取、解码、处理、编码、发送，使用由IO线程NioEventLoop负责
 
+Netty组件的设计
+Netty的主要组件有：Channel、EventLoop、ChannelFuture、ChannelHandler、ChannelPipe
+ChannelHandler充当了处理入站和出站数据的应用程序逻辑的容器，如果实现了ChannelInboundHandler接口，就可以接收入站事件和数据
+业务逻辑通常写在一个或多个ChannelInboundHandler中
+ChannelPipe提供了ChannelHandler链的容器，以客户端应用程序为例，如果事件的运动方向是从客户端到服务端，称为事件时出站的，即客户端发送
+给服务端的数据会通过pipeline中一系列的ChannelOutboundHandler，并被这些Handler处理，反之称之为入站的
 
+HandlerChain:
+不论编码器Handler还是解码器Handler，即接收的消息类型和处理的消息类型必须保持一致，否则Handler不会被执行
+在解码器进行解码时，需要判断缓冲区（ByteBuf）的数据是否足够，否则接收到的结果会与期望的结果可能不一致
