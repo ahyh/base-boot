@@ -153,7 +153,10 @@ public class SingleLinkedList {
             System.out.println(temp);
             temp = temp.next;
         }
+    }
 
+    public HeroNode getHeader() {
+        return header;
     }
 
     public static class HeroNode {
