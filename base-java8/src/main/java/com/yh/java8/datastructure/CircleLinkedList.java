@@ -5,93 +5,80 @@ package com.yh.java8.datastructure;
  *
  * @author yanhuan
  */
-public class CircleLinkedList {
+public class CircleLinkedList<T> {
 
-    private Node first = null;
+    private Node<T> first = null;
 
     /**
-     * 约瑟夫问题
-     *
-     * @param startNo
-     * @param countNum
+     * 初始化空栈
      */
-    public void josepfu(int startNo, int countNum) {
-        int size = size();
-        if (size == 0 || startNo < 1 || startNo > size) {
-            throw new RuntimeException("invalid params");
-        }
-        //helper指向最后一个节点
-        Node helper = first;
-        while (true) {
-            if (helper.next == first) {
-                break;
-            }
-            helper = helper.next;
-        }
-
-        for (int i = 0; i < startNo - 1; i++) {
-            first = first.next;
-            helper = helper.next;
-        }
-
-        //循环操作，移动startNo-1次，出圈
-        while (true) {
-            if (helper == first) {
-                break;
-            }
-            for (int j = 0; j < countNum - 1; j++) {
-                //first指向的节点就是要出圈的节点
-                first = first.next;
-                helper = helper.next;
-            }
-            System.out.println("移除的节点：" + first);
-            first = first.next;
-            helper.next = first;
-        }
-        System.out.println("最后的节点：" + first);
+    public CircleLinkedList() {
     }
 
-    public void deleteNode(int no) {
-        if (first == null || no < 1 || no > size()) {
-            throw new RuntimeException("invalid params");
+    public CircleLinkedList(Node<T> node) {
+        if (node == null) {
+            throw new RuntimeException("param invalid");
         }
-        Node curNode = first;
-        Node pre = null, next = null;
-        while (curNode.next != first) {
-            if (curNode.next.no == no) {
-                pre = curNode;
-                curNode = curNode.next;
-                break;
-            }
-            curNode = curNode.next;
-        }
-        next = curNode.next;
-        if (pre == null) {
-            pre = curNode;
-            next = next.next;
-            pre.next = next;
-            this.first = pre.next;
-        } else {
-            curNode = null;
-            pre.next = next;
-        }
+        this.first = node;
+        node.setNext(first);
     }
 
+    /**
+     * 初始化循环链表
+     *
+     * @param nodes  需要插入循环链表的节点数组
+     * @param revert 是否需要反转，true需要反转，false不反转从尾部插入
+     */
+    public CircleLinkedList(Node<T>[] nodes, boolean revert) {
+        if (nodes == null) {
+            throw new RuntimeException("param invalid");
+        }
+        //如果需要从头部插入
+        if (revert == true) {
+            Node temp;
+            for (int i = 0; i <= nodes.length / 2; i++) {
+                temp = nodes[i];
+                nodes[i] = nodes[nodes.length - 1 - i];
+                nodes[nodes.length - 1 - i] = temp;
+            }
+        }
+        Node<T> curNode = null;
+        for (Node<T> node : nodes) {
+            if (node == null) {
+                throw new RuntimeException("Invalid param");
+            }
+            if (this.first == null || curNode == null) {
+                this.first = node;
+                curNode = this.first;
+            } else {
+                curNode.setNext(node);
+                curNode = node;
+            }
+        }
+        curNode.setNext(this.first);
+    }
+
+
+    /**
+     * 求循环链表元素个数
+     *
+     * @return 循环列表中元素个数
+     */
     public int size() {
         if (first == null) {
             return 0;
         }
-        int sum = 0;
+        int sum = 1;
         Node curNode = first;
-        while (curNode.next != first) {
+        while (curNode.getNext() != first) {
             sum++;
-            curNode = curNode.next;
+            curNode = curNode.getNext();
         }
         return sum;
     }
 
     /**
-     * 遍历
+     * 遍历打印循环链表
      */
     public void printList() {
         if (first == null) {
@@ -100,93 +87,159 @@ public class CircleLinkedList {
         Node curNode = first;
         do {
             System.out.println(curNode);
-            curNode = curNode.next;
+            curNode = curNode.getNext();
         } while (curNode != first);
     }
 
     /**
-     * 按照编号添加Node
+     * 在循环链表的尾部添加节点
      *
-     * @param node 待添加的node
+     * @param ele 待添加的元素值
      */
-    public void addNode(Node node) {
+    public void addNodeR(T ele) {
+        if (ele == null) {
+            throw new RuntimeException("ele cannot null");
+        }
+        Node<T> node = new Node<>(ele);
         //如果是添加的第一个节点
         if (first == null) {
             first = node;
-            first.next = first;
+            first.setNext(first);
         } else {
             Node curNode = first;
-            Node nextNode = curNode.next;
+            Node nextNode = curNode.getNext();
             //如果只有一个节点
             if (curNode == nextNode) {
-                if (nextNode.no > node.no) {
-                    first = node;
-                    first.next = curNode;
-                    curNode.next = first;
-                } else {
-                    curNode.next = node;
-                    node.next = first;
-                }
+                first.setNext(node);
+                node.setNext(nextNode);
             } else {
-                //多个节点
+                //多个节点, 找到最后一个节点
                 while (nextNode != first) {
-                    if (curNode.no < node.no && nextNode.no > node.no) {
-                        break;
-                    }
                     curNode = nextNode;
-                    nextNode = nextNode.next;
+                    nextNode = nextNode.getNext();
                 }
-                if (nextNode == first) {
-                    curNode.next = node;
-                    node.next = first;
-                } else {
-                    curNode.next = node;
-                    node.next = nextNode;
-                }
+                curNode.setNext(node);
+                node.setNext(first);
             }
         }
     }
 
-    public static class Node {
-        private int no;
-        private String name;
-        private Node next;
-
-        public Node(int no, String name) {
-            this.no = no;
-            this.name = name;
+    /**
+     * 头部插入节点
+     *
+     * @param ele 节点中元素之
+     */
+    public void addNodeF(T ele) {
+        if (ele == null) {
+            throw new RuntimeException("ele cannot null");
         }
-
-        public int getNo() {
-            return no;
-        }
-
-        public void setNo(int no) {
-            this.no = no;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public Node getNext() {
-            return next;
-        }
-
-        public void setNext(Node next) {
-            this.next = next;
-        }
-
-        @Override
-        public String toString() {
-            return "Node{" +
-                    "no=" + no +
-                    ", name='" + name + '\'' +
-                    '}';
+        Node<T> node = new Node<>(ele);
+        //如果是添加的第一个节点
+        if (first == null) {
+            first = node;
+            first.setNext(first);
+        } else {
+            Node curNode = first;
+            Node nextNode = curNode.getNext();
+            //如果只有一个节点
+            if (curNode == nextNode) {
+                this.first = node;
+                node.setNext(nextNode);
+                nextNode.setNext(this.first);
+            } else {
+                //多个节点, 找到最后一个节点
+                while (nextNode != first) {
+                    curNode = nextNode;
+                    nextNode = curNode.getNext();
+                }
+                node.setNext(first);
+                this.first = node;
+                curNode.setNext(first);
+            }
         }
     }
+
+    public boolean isEmpty() {
+        return this.first == null;
+    }
+
+    /**
+     * 待删除节点编号,从0开始
+     *
+     * @param no 待删除节点编号
+     */
+    public void deleteNode(int no) {
+        if (first == null || no < 0 || no > size() || isEmpty()) {
+            throw new RuntimeException("invalid params");
+        }
+        Node curNode = first;
+        Node pre = null, next = null;
+        int i = 0;
+        while (curNode.getNext() != first) {
+            pre = curNode;
+            curNode = curNode.getNext();
+            next = curNode.getNext();
+            i++;
+            if (no != 0 && i == no) {
+                break;
+            }
+        }
+        if (no == 0) {
+            //需要删除的是first节点
+            pre = curNode;
+            curNode = curNode.getNext();
+            next = curNode.getNext();
+            this.first = next;
+            pre.setNext(this.first);
+        } else {
+            curNode.setNext(null);
+            curNode = null;
+            pre.setNext(next);
+        }
+    }
+
+
+//    /**
+//     * 约瑟夫问题
+//     *
+//     * @param startNo
+//     * @param countNum
+//     */
+//    public void josepfu(int startNo, int countNum) {
+//        int size = size();
+//        if (size == 0 || startNo < 1 || startNo > size) {
+//            throw new RuntimeException("invalid params");
+//        }
+//        //helper指向最后一个节点
+//        Node helper = first;
+//        while (true) {
+//            if (helper.next == first) {
+//                break;
+//            }
+//            helper = helper.next;
+//        }
+//
+//        for (int i = 0; i < startNo - 1; i++) {
+//            first = first.next;
+//            helper = helper.next;
+//        }
+//
+//        //循环操作，移动startNo-1次，出圈
+//        while (true) {
+//            if (helper == first) {
+//                break;
+//            }
+//            for (int j = 0; j < countNum - 1; j++) {
+//                //first指向的节点就是要出圈的节点
+//                first = first.next;
+//                helper = helper.next;
+//            }
+//            System.out.println("移除的节点：" + first);
+//            first = first.next;
+//            helper.next = first;
+//        }
+//        System.out.println("最后的节点：" + first);
+//    }
+
+
 }

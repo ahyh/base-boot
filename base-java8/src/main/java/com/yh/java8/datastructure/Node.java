@@ -1,5 +1,6 @@
 package com.yh.java8.datastructure;
 
+
 /**
  * Stack中存放的节点
  *
@@ -32,5 +33,10 @@ public class Node<E> {
 
     public void setNext(Node next) {
         this.next = next;
+    }
+
+    @Override
+    public String toString() {
+        return data.toString();
     }
 }
