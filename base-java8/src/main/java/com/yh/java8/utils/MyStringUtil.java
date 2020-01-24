@@ -1,5 +1,6 @@
 package com.yh.java8.utils;
 
+import com.google.common.base.Preconditions;
 import com.yh.java8.datastructure.ArrayStack;
 import com.yh.java8.datastructure.ListStack;
 import org.apache.commons.lang3.StringUtils;
@@ -208,5 +209,59 @@ public class MyStringUtil {
             i++;
         }
         return stack.pop();
+    }
+
+    /**
+     * kmp算法求解模式串的位置
+     *
+     * @param sourceStr 源串
+     * @param subStr    模式串
+     * @return 模式串的位置
+     */
+    public static int kmpIndex(String sourceStr, String subStr) {
+        Preconditions.checkArgument(StringUtils.isNotBlank(sourceStr), "source string should not empty");
+        Preconditions.checkArgument(StringUtils.isNotBlank(subStr), "sub string should not empty");
+        int[] next = getNext(subStr);
+        int i = 0, j = 0;
+        while (i < sourceStr.length() && j < subStr.length()) {
+            if (j == -1 || sourceStr.charAt(i) == subStr.charAt(j)) {
+                i++;
+                j++;
+            } else {
+                j = next[j];
+            }
+        }
+        if (j >= subStr.length()) {
+            return i - subStr.length();
+        } else {
+            return -1;
+        }
+    }
+
+    /**
+     * 获取模式串的next数组
+     *
+     * @param subStr 待查找的子串
+     * @return next数组
+     */
+    private static int[] getNext(String subStr) {
+        int[] next = new int[subStr.length()];
+        next[0] = -1;
+        int i, k = -1;
+        for (i = 0; i < subStr.length() - 1; ) {
+            if (k == -1 || subStr.charAt(i) == subStr.charAt(k)) {
+                i++;
+                k++;
+                next[i] = k;
+            } else {
+                k = next[k];
+            }
+        }
+        return next;
+    }
+
+    public static void main(String[] args) {
+        int i = kmpIndex("abcabceraea", "cab");
+        System.out.println(i);
     }
 }

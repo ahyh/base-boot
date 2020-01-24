@@ -26,12 +26,16 @@ public class CircleLinkedList<T> {
     /**
      * 初始化循环链表
      *
-     * @param nodes  需要插入循环链表的节点数组
+     * @param arr    需要插入循环链表的节点数组
      * @param revert 是否需要反转，true需要反转，false不反转从尾部插入
      */
-    public CircleLinkedList(Node<T>[] nodes, boolean revert) {
-        if (nodes == null) {
+    public CircleLinkedList(T[] arr, boolean revert) {
+        if (arr == null) {
             throw new RuntimeException("param invalid");
+        }
+        Node<T>[] nodes = new Node[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            nodes[i] = new Node<>(arr[i]);
         }
         //如果需要从头部插入
         if (revert == true) {
@@ -198,48 +202,12 @@ public class CircleLinkedList<T> {
         }
     }
 
+    public Node getFirst() {
+        return first;
+    }
 
-//    /**
-//     * 约瑟夫问题
-//     *
-//     * @param startNo
-//     * @param countNum
-//     */
-//    public void josepfu(int startNo, int countNum) {
-//        int size = size();
-//        if (size == 0 || startNo < 1 || startNo > size) {
-//            throw new RuntimeException("invalid params");
-//        }
-//        //helper指向最后一个节点
-//        Node helper = first;
-//        while (true) {
-//            if (helper.next == first) {
-//                break;
-//            }
-//            helper = helper.next;
-//        }
-//
-//        for (int i = 0; i < startNo - 1; i++) {
-//            first = first.next;
-//            helper = helper.next;
-//        }
-//
-//        //循环操作，移动startNo-1次，出圈
-//        while (true) {
-//            if (helper == first) {
-//                break;
-//            }
-//            for (int j = 0; j < countNum - 1; j++) {
-//                //first指向的节点就是要出圈的节点
-//                first = first.next;
-//                helper = helper.next;
-//            }
-//            System.out.println("移除的节点：" + first);
-//            first = first.next;
-//            helper.next = first;
-//        }
-//        System.out.println("最后的节点：" + first);
-//    }
-
+    public void setFirst(Node first){
+        this.first = first;
+    }
 
 }
