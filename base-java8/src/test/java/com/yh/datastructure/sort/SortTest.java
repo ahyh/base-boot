@@ -62,4 +62,11 @@ public class SortTest {
         Sort.mergeSortRecurse(nums);
         Arrays.asList(nums).forEach(System.out::println);
     }
+
+    @Test
+    public void testHeapSort(){
+        Integer[] nums = {1, -2, 3, -4, 6};
+        Sort.heapSort(nums);
+        Arrays.asList(nums).forEach(System.out::println);
+    }
 }

@@ -15,6 +15,7 @@ public class Sort {
     private final static SortStrategy QUICK_SORT = new QuickSort();
     private final static SortStrategy MERGE_SORT = new MergeSort();
     private final static SortStrategy MERGE_SORT_RECURSE = new MergeSortRecurse();
+    private final static SortStrategy HEAP_SORT = new HeapSort();
 
 
     public static <T extends Comparable> void bubbleSort(T[] elements) {
@@ -51,6 +52,10 @@ public class Sort {
 
     public static <T extends Comparable> void radixSort(T[] elements) {
 
+    }
+
+    public static <T extends Comparable> void heapSort(T[] elements) {
+        HEAP_SORT.sort(elements);
     }
 
     /**
@@ -323,6 +328,59 @@ public class Sort {
                     flag = false;
                 }
             }
+        }
+    }
+
+    /**
+     * 堆排序
+     * 1-将无序序列构建成一个堆，根据升序/降序需求选择大顶堆或者小顶堆
+     * 2-将堆顶元素与末尾元素进行交换，将最大的元素沉入数组末端
+     * 3-重新调整结构，使其满足堆定义，然后继续交换堆顶元素与末尾元素，反复执行调整与交换步骤，知道整个序列有序
+     */
+    public static class HeapSort implements SortStrategy {
+
+        @Override
+        public void sort(Comparable[] elements) {
+            heapSort(elements, elements.length);
+        }
+
+        public void heapSort(Comparable[] elements, int length) {
+            int i;
+            Comparable temp;
+            for (i = length / 2 - 1; i >= 0; i--) {
+                adjustHeap(elements, i, length);
+            }
+            for (int j = length - 1; j > 0; j--) {
+                //找到大顶堆后进行交换
+                temp = elements[j];
+                elements[j] = elements[0];
+                elements[0] = temp;
+                adjustHeap(elements, 0, j);
+            }
+        }
+
+        /**
+         * 调整堆，使之成为大顶堆或小顶堆
+         *
+         * @param elements 待排序的元素
+         * @param low      待排序元素起始下标
+         * @param high     待排序元素末尾下标
+         */
+        private static void adjustHeap(Comparable[] elements, int low, int high) {
+            int i = low;
+            Comparable temp = elements[i];
+            for (int j = 2 * i + 1; j < high; j = j * 2 + 1) {
+                if (j + 1 < high && elements[j].compareTo(elements[j + 1]) < 0) {
+                    j++;
+                }
+                if (elements[j].compareTo(temp) > 0) {
+                    elements[i] = elements[j];
+                    i = j;
+                } else {
+                    break;
+                }
+            }
+            elements[i] = temp;
         }
     }
 
