@@ -13,6 +13,10 @@ public class BSortTree<T extends Comparable> {
      */
     private BstNode<T> root;
 
+    public BstNode getRoot(){
+        return this.root;
+    }
+
     /**
      * 添加节点
      *
@@ -77,20 +81,28 @@ public class BSortTree<T extends Comparable> {
         } else {
             //删除只有一颗子树的节点
             if (targetNode.getLeft() != null) {
-                //待删除的节点有左子节点
-                if (parentNode.getLeft().getValue().compareTo(value) == 0) {
-                    //待删除节点是parentNode的左子节点
-                    parentNode.setLeft(targetNode.getLeft());
+                if (parentNode != null) {
+                    //待删除的节点有左子节点
+                    if (parentNode.getLeft().getValue().compareTo(value) == 0) {
+                        //待删除节点是parentNode的左子节点
+                        parentNode.setLeft(targetNode.getLeft());
+                    } else {
+                        //待删除的节点是parentNode的右子节点
+                        parentNode.setRight(targetNode.getLeft());
+                    }
                 } else {
-                    //待删除的节点是parentNode的右子节点
-                    parentNode.setRight(targetNode.getLeft());
+                    this.root = targetNode.getLeft();
                 }
             } else {
-                //待删除的节点有右子节点
-                if (parentNode.getLeft().getValue().compareTo(value) == 0) {
-                    parentNode.setLeft(targetNode.getRight());
+                if (parentNode != null) {
+                    //待删除的节点有右子节点
+                    if (parentNode.getLeft().getValue().compareTo(value) == 0) {
+                        parentNode.setLeft(targetNode.getRight());
+                    } else {
+                        parentNode.setRight(targetNode.getRight());
+                    }
                 } else {
-                    parentNode.setRight(targetNode.getRight());
+                    this.root = targetNode.getRight();
                 }
             }
         }
