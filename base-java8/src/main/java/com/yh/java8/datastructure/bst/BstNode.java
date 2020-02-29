@@ -95,6 +95,20 @@ public class BstNode<T extends Comparable> {
     }
 
     /**
+     * AVL树右旋
+     * 如果左子树的高度 - 右子树的高度 > 1
+     */
+    private void rightRotate() {
+        //1-创建新的节点，以当前节点的值
+        BstNode<T> newNode = new BstNode<>(value);
+        newNode.setRight(right);
+        newNode.setLeft(left.right);
+        this.value = (T) left.value;
+        left = left.left;
+        right = newNode;
+    }
+
+    /**
      * 添加节点
      *
      * @param node
@@ -119,7 +133,18 @@ public class BstNode<T extends Comparable> {
         //添加完节点后如果右子树的高度-左子树的高度 > 1, 则左旋
         if (rightHeight() - leftHeight() > 1) {
             if (right != null && right.rightHeight() < right.leftHeight()) {
+                right.rightRotate();
+            } else {
                 leftRotate();
+            }
+        }
+        //添加完节点后如果左子树的高度-右子树的高度 > 1, 则右旋
+        if (leftHeight() - rightHeight() > 1) {
+            //如果它的左子树的右子树的高度大于它的左子树的高度，先对当前节点的左子树进行左旋转
+            if (left != null && left.rightHeight() > left.leftHeight()) {
+                left.leftRotate();
+            } else {
+                rightRotate();
             }
         }
     }
