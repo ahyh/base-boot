@@ -32,4 +32,9 @@ public class GraphTest {
         graph.dfs();
     }
 
+    @Test
+    public void testBFS(){
+        graph.bfs();
+    }
+
 }
