@@ -13,12 +13,18 @@ public class BinaryTree<T> {
      */
     private BTNode<T> root;
 
+    private int sum;
+
     public BinaryTree() {
         this.root = new BTNode<>();
     }
 
     public BinaryTree(T data) {
         this.root = new BTNode<>(data);
+    }
+
+    public BinaryTree(BTNode btNode){
+        this.root = btNode;
     }
 
     /**
@@ -143,4 +149,41 @@ public class BinaryTree<T> {
             System.out.println(btNode);
         }
     }
+
+    /**
+     * 叶子节点加和
+     * @param btNode
+     */
+    public void preOrderAdd(BTNode btNode){
+        if (btNode != null) {
+            if(btNode.getLeft() != null){
+                btNode.getLeft().setData(btNode.getData().toString() + btNode.getLeft().getData().toString());
+            }
+            if(btNode.getRight() != null){
+                btNode.getRight().setData(btNode.getData().toString() + btNode.getRight().getData().toString());
+            }
+            if(btNode.getLeft() == null && btNode.getRight() == null){
+                this.sum += Integer.valueOf(btNode.getData().toString());
+            }
+            preOrderAdd(btNode.getLeft());
+            preOrderAdd(btNode.getRight());
+        }
+    }
+
+    public static void main(String[] args) {
+        BTNode root = new BTNode<>(5);
+        BTNode<Integer> leftN1 = new BTNode<>(3);
+        BTNode<Integer> rightN1 = new BTNode<>(4);
+        BTNode<Integer> leftN2 = new BTNode<>(2);
+        root.setLeft(leftN1);
+        root.setRight(rightN1);
+        leftN1.setLeft(leftN2);
+
+        BinaryTree<Object> tree = new BinaryTree<>(root);
+
+        tree.preOrderAdd(root);
+
+        System.out.println();
+    }
+
 }
