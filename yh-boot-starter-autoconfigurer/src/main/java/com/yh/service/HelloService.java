@@ -1,7 +1,9 @@
 package com.yh.service;
 
 import com.yh.properties.HelloProperties;
+import org.springframework.stereotype.Component;
 
+@Component
 public class HelloService {
 
     private HelloProperties helloProperties;

@@ -23,10 +23,10 @@ public class HelloAutoConfiguration {
     @Resource
     private HelloProperties helloProperties;
 
-    @Bean
-    public HelloService helloService() {
-        HelloService helloService = new HelloService();
-        helloService.setHelloProperties(helloProperties);
-        return helloService;
-    }
+//    @Bean
+//    public HelloService helloService() {
+//        HelloService helloService = new HelloService();
+//        helloService.setHelloProperties(helloProperties);
+//        return helloService;
+//    }
 }
