@@ -50,7 +50,7 @@
         <java.version>1.8</java.version>
     </properties>
 
-    <!-- 这个插件，可以将应用打包成一个可执行的jar包 -->
+    <!-- 这个插件，可以将应用打包成一个可执行的 jar包 -->
     <build>
         <plugins>
             <plugin>
