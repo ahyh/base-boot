@@ -2,9 +2,12 @@ package com.yh.mybatis.plus.test;
 
 import com.yh.mybatis.plus.dao.UserMapper;
 import com.yh.mybatis.plus.pojo.User;
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.Objects;
 
 @SpringBootTest
 public class MybatisPlusDemoTest {
@@ -18,6 +21,7 @@ public class MybatisPlusDemoTest {
     @Test
     public void testGet() {
         User user = userMapper.selectById(1L);
-        System.out.println(user);
+        Assert.assertTrue(user != null);
+        Assert.assertTrue(Objects.equals(user.getId(), 1L));
     }
 }
