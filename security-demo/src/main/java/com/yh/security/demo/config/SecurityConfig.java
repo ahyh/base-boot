@@ -69,6 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and().rememberMe().tokenRepository(persistentTokenRepository()).tokenValiditySeconds(24 * 3600) // 设置自动登录
                 .userDetailsService(myUserDetailService) //设置使用这个userDetailService操作DB
-                .and().csrf().disable();
+                ;
+//                .and().csrf().disable(); //测试关闭csrf校验
     }
 }
