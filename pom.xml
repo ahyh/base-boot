@@ -33,6 +33,7 @@
         <module>netty-learn</module>
         <module>mybatisplus-demo</module>
         <module>security-demo</module>
+        <module>byte-jvm</module>
     </modules>
 
     <name>base-boot</name>
