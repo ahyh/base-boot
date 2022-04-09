@@ -151,6 +151,12 @@ public class AsmDemo {
         FileUtils.writeByteArrayToFile(new File("D://file//removeMethodDemo.class"), bytesModified);
     }
 
+    /**
+     * 修改方法内容
+     *
+     * @param path       class文件路径
+     * @param methodName 需要修改的方法名称
+     */
     public static void updateMethod(String path, String methodName) throws Exception {
         byte[] bytes = getBytes(path);
         ClassReader cr = new ClassReader(bytes);
@@ -186,6 +192,12 @@ public class AsmDemo {
         FileUtils.writeByteArrayToFile(new File("D://file//updateMethodDemo.class"), bytesModified);
     }
 
+    /**
+     * 通过AdviceAdapter在方法的开始和结束前插入代码
+     * @param path class文件路径
+     * @param methodName 方法名
+     * @param addInfo 方法修改信息
+     */
     public static void addEnterInfo4Method(String path, String methodName, String addInfo) throws Exception {
         byte[] bytes = getBytes(path);
         ClassReader cr = new ClassReader(bytes);
